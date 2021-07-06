@@ -1,0 +1,23 @@
+{
+   "amo": {
+      "nombre": "Roberto",
+      "tipo": "Humano",
+      "le_gusta": [
+         "Una buena conversación",
+         "los animales",
+         "Un buen partido de fútbol"
+      ],
+      "edad": 45,
+      "mascota": {
+         "nombre": "Rocco",
+         "tipo": "perro",
+         "raza": "Labrador",
+         "edad": 5,
+         "le_gusta": [
+            "Comer",
+            "Correr a las palomas",
+            "ladrar de noche"
+         ]
+      }
+   }
+}
