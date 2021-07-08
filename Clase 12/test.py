@@ -18,4 +18,15 @@ def twitterUsers():
     
     return response
 
+@app.route("/users/<path>")
+def searchUsers(path):
+    
+    if path == "people":
+        return "ACA VA UN JSON DE PERSONAS"
+    elif path == "company":
+        return "ACA VA UN JSON DE EMPRESAS"
+    else:
+        return "UPPS... NO PUEDO BUSCAR LO QUE ESTAS PIDIENDO :("
+
+
 app.run( port = 3030, host = '0.0.0.0' )
