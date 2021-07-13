@@ -1,6 +1,14 @@
 from flask import Flask, json
 from pymongo import MongoClient
 from urllib.parse import urlencode
+import settings
+from os import environ
+
+
+USER = environ["DB_USER"]
+PASS = environ["DB_PASS"]
+HOST = environ["DB_HOST"]
+BASE = environ["DB_NAME"]
 
 app = Flask(__name__)
 
@@ -11,7 +19,7 @@ params = {
     "ssl" : "true",
     "ssl_cert_reqs" : "CERT_NONE"
 }
-client = MongoClient("mongodb+srv://eant-python:eantpass2021@python-data-developers.osipp.mongodb.net/PDD-MJ-N-287?" + urlencode(params) )      
+client = MongoClient("mongodb+srv://" + USER + ":" + PASS + "@" + HOST + "/" + BASE + "?" + urlencode(params) )      
 db = client
 #####################
 
@@ -43,24 +51,28 @@ def searchUsers(path):
         return "UPPS... NO PUEDO BUSCAR LO QUE ESTAS PIDIENDO :("
     '''
     
-    if path not in ["people", "company"]:
+    if path not in ["people", "company", "all"]:
         return "UPPS... NO PUEDO BUSCAR LO QUE ESTAS PIDIENDO :("
     
     data = db["PDD-MJ-N-287"]
     test = data["twitter"]
     
-    users = test.find({ "type" : path }).limit(10)
+    if path == "all":
+        users = test.find().limit(10)
+    else:
+        users = test.find({ "type" : path }).limit(10)
     
     result = []
-    
+
     for user in users:
+        '''
         item = {
             'usuario' : user['name']
         }
-        result.append(item)
-    
-    return app.response_class(response = json.dumps(result), status = 200, mimetype = "application/json" )
+        '''
+        result.append(user)
 
+    return app.response_class(response = json.dumps(result), status = 200, mimetype = "application/json" )
 
 @app.route("/test")
 def test():
