@@ -10,6 +10,7 @@ PASS = environ["DB_PASS"]
 HOST = environ["DB_HOST"]
 BASE = environ["DB_NAME"]
 PORT = environ["PORT"]
+FLASK_ENV = environ["FLASK_ENV"]
 
 app = Flask(__name__)
 
@@ -156,9 +157,8 @@ def postearTweets():
 
 
 
-
-
-
-
-
-app.run( port = PORT, host = '0.0.0.0' )
+if __name__ == "__main__":
+    if FLASK_ENV == "development":
+        app.run( port = PORT, host = '0.0.0.0' )
+    else:
+        app.run( port = PORT )
